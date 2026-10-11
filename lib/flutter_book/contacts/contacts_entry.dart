@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:email_validator/email_validator.dart';
 import 'contacts_db_worker.dart';
 import 'contacts_model.dart' show ContactsModel, contactsModel;
 import '../../utils.dart' as utils;
@@ -10,12 +12,13 @@ class ContactsEntry extends StatelessWidget {
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _phoneEditingController = TextEditingController();
   final TextEditingController _emailEditingController = TextEditingController();
+  final PhoneController _phoneController = PhoneController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ContactsEntry({super.key}) {
     _nameEditingController.addListener(() {contactsModel.entityBeingEdited.name = _nameEditingController.text;});
-    _phoneEditingController.addListener(() {contactsModel.entityBeingEdited.phone = _phoneEditingController.text;});
     _emailEditingController.addListener(() {contactsModel.entityBeingEdited.email = _emailEditingController.text;});
+    _phoneController.addListener(() {_phoneController.isValid ? contactsModel.entityBeingEdited.phone = _phoneController.completeNumber : null;});
   }
 
   void _save(BuildContext inContext, ContactsModel inModel) async {
@@ -105,8 +108,11 @@ class ContactsEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     if(contactsModel.entityBeingEdited != null) {
       if(contactsModel.entityBeingEdited.name != null) _nameEditingController.text = contactsModel.entityBeingEdited.name;
-      if(contactsModel.entityBeingEdited.phone != null) _phoneEditingController.text = contactsModel.entityBeingEdited.phone;
       if(contactsModel.entityBeingEdited.email != null) _emailEditingController.text = contactsModel.entityBeingEdited.email;
+      if(contactsModel.entityBeingEdited.phone != null) {
+        _phoneEditingController.text = contactsModel.entityBeingEdited.phone;
+        _phoneController.completeNumber = _phoneEditingController.text;
+      }
     }
 
     return ScopedModel<ContactsModel>(
@@ -174,9 +180,8 @@ class ContactsEntry extends StatelessWidget {
                   ),
 
                   ListTile(
-                    leading: Icon(Icons.person),
                     title: TextFormField(
-                      decoration: InputDecoration(hintText: "Nome"),
+                      decoration: InputDecoration(labelText: "Nome", border: OutlineInputBorder()),
                       controller: _nameEditingController,
                       validator: (String? value) {
                         if(value!.isEmpty) return "Insira um nome";
@@ -187,27 +192,32 @@ class ContactsEntry extends StatelessWidget {
                   ),
 
                   ListTile(
-                    leading: Icon(Icons.phone),
-                    title: TextFormField(
-                      decoration: InputDecoration(hintText: "Telefone"),
+                    title: IntlPhoneField(
+                      decoration: InputDecoration(labelText: "Telefone", border: OutlineInputBorder()),
                       controller: _phoneEditingController,
-                      keyboardType: TextInputType.phone
+                      phoneController: _phoneController,
+                      initialCountryCode: "BR",
+                      formatInput: true,
+                      invalidMessage: "Insira um telefone válido",
+                      languageCode: "pt",
                     )
                   ),
 
                   ListTile(
-                    leading: Icon(Icons.email),
                     title: TextFormField(
-                      decoration: InputDecoration(hintText: "Email"),
+                      decoration: InputDecoration(labelText: "Email", border: OutlineInputBorder()),
                       controller: _emailEditingController,
-                      keyboardType: TextInputType.emailAddress
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (String? value) => EmailValidator.validate(value!) ? null : "Insira um email válido"
                     )
                   ),
 
                   ListTile(
-                    leading: Icon(Icons.cake),
-                    title: Text("Aniversário"),
-                    subtitle: Text(contactsModel.chosenDate == null ? "" : contactsModel.chosenDate!),
+                    title: TextFormField(
+                      decoration: InputDecoration(labelText: "Aniversário", border: OutlineInputBorder()),
+                      initialValue: contactsModel.chosenDate == null ? "" : contactsModel.chosenDate!,
+                      readOnly: true,
+                    ),
                     trailing: IconButton(
                       icon: Icon(Icons.edit),
                       color: Colors.blue,
