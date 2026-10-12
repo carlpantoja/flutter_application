@@ -196,10 +196,14 @@ class ContactsEntry extends StatelessWidget {
                       decoration: InputDecoration(labelText: "Telefone", border: OutlineInputBorder()),
                       controller: _phoneEditingController,
                       phoneController: _phoneController,
-                      initialCountryCode: "BR",
                       formatInput: true,
-                      invalidMessage: "Insira um telefone válido",
-                      languageCode: "pt",
+                      initialCountryCode: "BR",
+                      languageCode: "pt_BR",
+                      localizations: IntlPhoneFieldLocalizations(
+                        searchHint: "Pesquisar",
+                        invalidNumber: "Insira um telefone válido",
+                        noCountriesFound: "O país não foi encontrado",
+                      )
                     )
                   ),
 
