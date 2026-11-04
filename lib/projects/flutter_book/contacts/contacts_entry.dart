@@ -6,7 +6,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'contacts_db_worker.dart';
 import 'contacts_model.dart' show ContactsModel, contactsModel;
-import '../../utils.dart' as utils;
+import '../../../utils.dart' as utils;
 
 class ContactsEntry extends StatelessWidget {
   final TextEditingController _nameEditingController = TextEditingController();

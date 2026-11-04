@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'tasks_db_worker.dart';
 import 'tasks_model.dart' show TasksModel, tasksModel;
-import '../../utils.dart' as utils;
+import '../../../utils.dart' as utils;
 
 class TasksEntry extends StatelessWidget {
   final TextEditingController _descriptionEditingController = TextEditingController();

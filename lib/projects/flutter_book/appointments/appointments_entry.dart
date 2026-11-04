@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'appointments_db_worker.dart';
 import 'appointments_model.dart' show AppointmentsModel, appointmentsModel;
-import '../../utils.dart' as utils;
+import '../../../utils.dart' as utils;
 
 class AppointmentsEntry extends StatelessWidget {
   final TextEditingController _titleEditingController = TextEditingController();

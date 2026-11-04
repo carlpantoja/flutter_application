@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'contacts_db_worker.dart';
 import 'contacts_model.dart' show Contact, ContactsModel, contactsModel;
-import '../../utils.dart' as utils;
+import '../../../utils.dart' as utils;
 
 class ContactsList extends StatelessWidget {
   const ContactsList({super.key});
