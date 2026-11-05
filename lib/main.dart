@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'projects/flutter_book/flutter_book.dart';
+import 'components/app_list.dart';
 import 'utils.dart' as utils;
 
 void main() async {
@@ -50,36 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const SizedBox(
-              height: 100.0,
-              child: DrawerHeader(
-                decoration: BoxDecoration(color: Colors.blue),
-                child: Text("Menu", style: TextStyle(fontSize: 22, color: Colors.white))
-              )
-            ),
-
-            ListTile(
-              title: const Text("Flutter Book"),
-              onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => FlutterBook()));}
-            )
-          ]
-        )
-      ),
       
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Veja aplicações mobile feitas com Flutter", style: TextStyle(fontSize: 18)),
-            FlutterLogo()
-          ]
-        )
-      )
+      body: AppList()
     );
   }
 }

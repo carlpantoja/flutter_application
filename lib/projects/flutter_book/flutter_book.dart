@@ -3,6 +3,7 @@ import 'appointments/appointments.dart';
 import 'contacts/contacts.dart';
 import 'notes/notes.dart';
 import 'tasks/tasks.dart';
+import '../../components/app_drawer.dart';
 
 class FlutterBook extends StatefulWidget {
   const FlutterBook({super.key});
@@ -25,6 +26,8 @@ class _FlutterBookState extends State<FlutterBook> {
         backgroundColor: Colors.blue[100],
         title: Text("Flutter Book")
       ),
+
+      drawer: AppDrawer(),
 
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem> [
